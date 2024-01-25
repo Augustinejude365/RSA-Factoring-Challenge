@@ -1,55 +1,32 @@
-#!/usr/bin/python3
-import sys
+#!/usr/bin/env python3
+""" Factor numbers """
 from sys import argv
-
-"""
-File_name: factors
-Created: 28th of May, 2023
-Auth: David James Taiye (Official0mega)
-Size: undefined
-Project: RSA-Factoring-Challenge
-Status: submitted.
-"""
+from math import sqrt
 
 
-def factorize(value):
-
-    """
-    # Factorize as many numbers as possible into..
-    # ..a product of two smaller numbers.
-    # VARIABLE(" "):
-    # factorize(int) Factorize all the things!
-    # Usage: factors <file>
-    # Output format: n=p*q
-    """
-    i = 2
-
-    if value < 2:
-        return
-    print()
-    print(value, "<- ")
-    while value % i:
-        i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
-    print()
-    print(value, "<- ")
+def open_read_file(file_name):
+    """read from file add to array"""
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
+    for line in lines:
+        number_to_factor.append(int(line))
+    return number_to_factor
 
 
-if len(argv) != 2:
-    exit()
+def find_and_times(n):
+    """factor each n given"""
+    for i in range(1, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
 
-try:
-    with open(argv[1]) as file:
-        line = file.readline()
 
-        while line != "":
-            value = int(line.split('\n')[0])
-            factorize(value)
-            line = file.readline()
-except FileNotFoundError:
-    print(f'File not found: {argv}')
-except ValueError:
-    print(f'Invalid input in the file: {argv}')
-except Exception as e:
-    print(f'An error occurred: {str(e)}')
-    pass
+def fac_list(ls):
+    """factor each num in ls """
+    for i in ls:
+        find_and_times(i)
+
+
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
